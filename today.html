@@ -59,8 +59,8 @@
         function updateCountdown() {
             const now = new Date();
             let currentYear = now.getFullYear();
-            let birthday = new Date(`April 1, ${currentYear} 00:00:00`).getTime();
-            let nextYearBirthday = new Date(`April 1, ${currentYear + 1} 00:00:00`).getTime();
+            let birthday = new Date(`March 17, ${currentYear} 00:00:00`).getTime();
+            let nextYearBirthday = new Date(`March 17, ${currentYear + 1} 00:00:00`).getTime();
 
             if (now.getTime() >= birthday && now.getTime() < nextYearBirthday) {
                 document.getElementById("countdown").innerHTML = "NI God manze for the far! 🎊";
