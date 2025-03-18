@@ -60,19 +60,21 @@
             const now = new Date();
             let currentYear = now.getFullYear();
             let birthday = new Date(`March 17, ${currentYear} 00:00:00`).getTime();
-            let nextYearBirthday = new Date(`March 17, ${currentYear + 1} 00:00:00`).getTime();
 
-            if (now.getTime() >= birthday && now.getTime() < nextYearBirthday) {
+            // If today's date is after March 17, count down to next year's March 17
+            if (now.getTime() > birthday) {
+                birthday = new Date(`March 17, ${currentYear + 1} 00:00:00`).getTime();
+            }
+
+            const diff = birthday - now.getTime();
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+            if (days === 0 && hours === 0 && minutes === 0 && seconds === 0) {
                 document.getElementById("countdown").innerHTML = "NI God manze for the far! 🎊";
             } else {
-                let targetDate = now.getTime() < birthday ? birthday : nextYearBirthday;
-
-                const diff = targetDate - now.getTime();
-                const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-                const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-                const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-
                 document.getElementById("countdown").innerHTML = 
                     `${days}d ${hours}h ${minutes}m ${seconds}s <br> Shifting gears to another level! 🎂`;
             }
@@ -80,46 +82,6 @@
 
         setInterval(updateCountdown, 1000);
         updateCountdown();
-
-        // Audio Trimmer: Start music at a specific time, but allow normal looping
-        document.addEventListener('DOMContentLoaded', () => {
-            const audio = document.getElementById('birthday-audio');
-            audio.volume = 1.0; // Set max volume
-            
-            // Set start time (in seconds)
-            const startTime = 15; // Adjust as needed
-            
-            // Set the start time when the audio first plays
-            audio.addEventListener('canplaythrough', function () {
-                if (audio.currentTime < startTime) {
-                    audio.currentTime = startTime;
-                }
-            });
-
-            // Try playing the audio, if blocked, ask for user interaction
-            audio.play().catch(() => {
-                let button = document.createElement('button');
-                button.innerText = "Play Music 🎶";
-                button.style.position = "absolute";
-                button.style.top = "50%";
-                button.style.left = "50%";
-                button.style.transform = "translate(-50%, -50%)";
-                button.style.padding = "10px 20px";
-                button.style.fontSize = "16px";
-                button.style.backgroundColor = "#ffcc00";
-                button.style.color = "#000";
-                button.style.border = "none";
-                button.style.borderRadius = "5px";
-                button.style.cursor = "pointer";
-                
-                document.body.appendChild(button);
-                
-                button.addEventListener('click', () => {
-                    audio.play();
-                    button.remove(); // Remove button after playing
-                });
-            });
-        });
     </script>
 </body>
 </html>
